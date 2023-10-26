@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('from_card');
             $table->unsignedBigInteger('to_card');
-            $table->foreign('from_card')->references('cards')->on('id');
-            $table->foreign('to_card')->references('cards')->on('id');
+            $table->foreign('from_card')->references('id')->on('cards');
+            $table->foreign('to_card')->references('id')->on('cards');
             $table->timestamps();
         });
     }
