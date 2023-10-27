@@ -12,11 +12,6 @@ class Card extends Model
 
     public function account(): BelongsTo
     {
-        return $this->belongsTo(Account::class, 'account_id', 'id');
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->account()->user();
+        return $this->belongsTo(Account::class);
     }
 }

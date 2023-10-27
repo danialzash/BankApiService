@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\TransactionSuccessEvent;
 use App\Models\TransactionFee;
+use App\Notifications\TransactionNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -23,11 +24,10 @@ class SendTransactionNotifications
      */
     public function handle(TransactionSuccessEvent $event): void
     {
-        $transactionFee = new TransactionFee([
-            'transaction_id' => $event->transaction->id,
-            'cost' => config('transaction.constant_fee'),
-        ]);
+        $fromToUser = $event->transaction->fromUser();
+        $toUser = $event->transaction->toUser();
 
-        $transactionFee->save();
+        $fromToUser->notify(new TransactionNotification());
+        $toUser->notify(new TransactionNotification());
     }
 }

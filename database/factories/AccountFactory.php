@@ -18,6 +18,7 @@ class AccountFactory extends Factory
      */
     public function definition(): array
     {
+        // fixme: change account number faker
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'account_number' => fake()->unique()->creditCardNumber,
