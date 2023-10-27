@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Card;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,15 @@ class TransactionFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
+        $fromCard = Card::inRandomOrder()->first();
+        $toCard = Card::where('id', '!=', $fromCard->id)->inRandomOrder()->first();
+
         return [
-            //
+            'from_card' => $fromCard->id,
+            'to_card' => $toCard->id,
+            'amount' => $this->faker->numberBetween(1000, 50000000),
         ];
     }
 }
