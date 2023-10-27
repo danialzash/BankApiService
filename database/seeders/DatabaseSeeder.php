@@ -6,7 +6,9 @@ namespace Database\Seeders;
 use App\Models\Account;
 use App\Models\Card;
 use App\Models\Transaction;
+use App\Models\TransactionFee;
 use App\Models\User;
+use Database\Factories\TransactionFeeFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,7 @@ class DatabaseSeeder extends Seeder
          Account::factory(100)->create();
          Card::factory(100)->create();
          Transaction::factory(500)->create();
+         TransactionFee::factory(500)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

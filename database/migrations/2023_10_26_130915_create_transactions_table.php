@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('to_card')->references('id')->on('cards');
             $table->unsignedDecimal('amount', 15);
             $table->timestamps();
+            $table->index('created_at');
         });
     }
 

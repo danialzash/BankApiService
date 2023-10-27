@@ -21,7 +21,7 @@ class AccountFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'account_number' => fake()->unique()->creditCardNumber,
-            'balance' => $this->faker->randomFloat(2, 100, 10000),
+            'balance' => $this->faker->numberBetween(0, 1000000000000),
         ];
     }
 }
