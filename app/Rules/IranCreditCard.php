@@ -8,6 +8,7 @@ class IranCreditCard implements Rule
 {
     public function passes($attribute, $value): bool
     {
+        $value = convert_numbers_to_english($value);
         $cleanedValue = preg_replace('/[^0-9]/', '', $value);
 
         if (strlen($cleanedValue) !== 16) {
