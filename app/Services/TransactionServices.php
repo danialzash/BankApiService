@@ -25,9 +25,9 @@ class TransactionServices
     {
         return DB::transaction(function () {
 
-            $fromCard = Card::findOrFail($this->fromCard);
-            $toCard = Card::findOrFail($this->toCard);
-            $amount = $this->amount;
+            $fromCard = Card::where('card_number', $this->fromCard)->firstOrFail();
+            $toCard = Card::where('card_number', $this->toCard)->firstOrFail();
+            $amount = (float) $this->amount;
 
             if ($fromCard->account->balance < $amount) {
                 return response()->json(['message' => 'Insufficient funds'], 422);
@@ -39,16 +39,13 @@ class TransactionServices
                 'amount' => $amount,
             ]);
 
-            $transaction->save();
-
-            // Update balances
             $fromCard->account->balance -= $amount;
             $toCard->account->balance += $amount;
 
-            $fromCard->save();
-            $toCard->save();
+            $transaction->save();
+            $fromCard->account->save();
+            $toCard->account->save();
 
             return response()->json(['message' => 'Transaction created successfully'], 201);
         }, 5);
-    }
-}
+    }}
