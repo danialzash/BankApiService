@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id');
             $table->foreign('transaction_id')->references('id')->on('transactions');
-            $table->integer('cost')->default(500);
+            $table->integer('cost')->default(config('transaction.constant_fee'));
             $table->timestamps();
         });
     }
