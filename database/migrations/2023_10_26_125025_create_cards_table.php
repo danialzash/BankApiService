@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('account_id');
             $table->foreign('account_id')->references('id')->on('accounts');
+            $table->string('card_number')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
