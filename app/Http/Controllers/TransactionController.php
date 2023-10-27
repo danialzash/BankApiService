@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
+use App\Services\TransactionServices;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -18,9 +20,13 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
-        //
+        try {
+            return (new TransactionServices($request->amount, $request->from_card, $request->to_card))->record();
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], 422);
+        }
     }
 
     /**
